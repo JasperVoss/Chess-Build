@@ -10,6 +10,9 @@ class Server:
 		self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		self.server.bind(self.ADDRESS)
 
+		self.conn = None
+		self.addr = None
+
 	def connect(self):
 		print('Trying to connect...')
 		self.server.listen()
