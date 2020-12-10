@@ -16,6 +16,8 @@ def magnet_off():
 ####      CONFIG       #####
 ###########################
 
+magnet_pin = 4
+
 gpio.setmode(gpio.BCM)
 gpio.setup(magnet_pin, gpio.OUT)
 
