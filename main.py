@@ -1,5 +1,5 @@
 import RPi.GPIO as gpio
-import time, move, motors, server, client
+import time, motors, server, client
 
 ###########################
 ####    FUNCTIONS     #####
