@@ -13,7 +13,7 @@ class Server:
 	def connect(self):
 		print('Trying to connect...')
 		self.server.listen()
-		self.conn, self.addr = server.accept()
+		self.conn, self.addr = self.server.accept()
 		print(f'Connected to {self.addr}')
 
 	def receive(self):
