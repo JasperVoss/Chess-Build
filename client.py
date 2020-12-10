@@ -11,16 +11,20 @@ class Client:
 		self.connected = False
 
 	def connect(self):
+		# print(f'Trying to connect to server at {self.SERVER} on port {self.PORT}...')
+		# while not self.connected:
+		# 	try:
+		# 		self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		# 		self.client.connect(self.ADDRESS)
+		# 		self.connected = True
+		# 	except:
+		# 		pass
+		# print(f'Success! Connected to server at {self.SERVER} on port {self.PORT}...')
 		print(f'Trying to connect to server at {self.SERVER} on port {self.PORT}...')
-		while not self.connected:
-			try:
-				self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-				self.client.connect(self.ADDRESS)
-				self.connected = True
-			except:
-				pass
+		self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		self.client.connect(self.ADDRESS)
+		self.connected = True
 		print(f'Success! Connected to server at {self.SERVER} on port {self.PORT}...')
-
 
 	def receive(self):
 		msg_received = False
