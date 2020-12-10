@@ -21,7 +21,7 @@ class Client:
 		while not self.connected:
 			try:
 				self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-				self.client.connect(ADDR)
+				self.client.connect(self.ADDRESS)
 				self.connected = True
 			except:
 				pass
