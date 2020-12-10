@@ -1,11 +1,5 @@
 import socket, threading
 
-HEADER = 64
-PORT = 5051
-FORMAT = 'utf-8'
-SERVER = "192.168.1.4"
-ADDR = (SERVER, PORT)
-
 
 class Client:
 	def __init__(self, HEADER, PORT, SERVER):
