@@ -33,7 +33,7 @@ sn = int(snfile.read())				#serial number to identify boards, board 0 will be mi
 snfile.close()
 
 
-PORT = 5051
+PORT = 5053
 if sn == 0:
 	connection = server.Server(64, PORT)
 else:
