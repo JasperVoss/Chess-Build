@@ -7,6 +7,8 @@ class Server:
 		self.SERVER = socket.gethostbyname(socket.gethostname())
 		self.ADDRESS = (self.SERVER, self.PORT)
 
+		pritn(self.SERVER, self.PORT)
+
 		self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		self.server.bind(self.ADDRESS)
 
