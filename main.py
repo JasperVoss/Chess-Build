@@ -35,7 +35,7 @@ snfile.close()
 
 PORT = 5055
 if sn == 0:
-	connection = server.Server(64, PORT)
+	connection = server.Server(64, PORT, '192.168.1.18')
 else:
 #	connection = client.Client(64, PORT, '71.232.76.201')
 	connection = client.Client(64, PORT, '192.168.1.18')

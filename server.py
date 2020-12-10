@@ -1,13 +1,11 @@
 import socket, threading
 
 class Server:
-	def __init__(self, HEADER, PORT):
+	def __init__(self, HEADER, PORT, SERVER):
 		self.HEADER = HEADER
 		self.PORT = PORT
-		self.SERVER = socket.gethostbyname(socket.gethostname())
+		self.SERVER = SERVER
 		self.ADDRESS = (self.SERVER, self.PORT)
-
-		print(self.SERVER, self.PORT)
 
 		self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		self.server.bind(self.ADDRESS)
