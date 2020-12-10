@@ -5,10 +5,10 @@ class Server:
 		self.HEADER = HEADER
 		self.PORT = PORT
 		self.SERVER = socket.gethostbyname(socket.gethostname())
-		self.ADDRESS = (SERVER, PORT)
+		self.ADDRESS = (self.SERVER, self.PORT)
 
 		self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		self.server.bind(ADDRESS)
+		self.server.bind(self.ADDRESS)
 
 	def connect(self):
 		print('Trying to connect...')
