@@ -43,15 +43,13 @@ else:
 connection.connect()
 
 if sn == 0:
+	time.sleep(1)
 	connection.send("Message 1")
 	connection.send("Message 2")
 	connection.send("Message 3")
-	connection.send("Message 4")
 
 else:
-	time.sleep(1)
 	print(connection.receive())
-	time.sleep(1)
 	print(connection.receive())
 	print(connection.receive())
 
