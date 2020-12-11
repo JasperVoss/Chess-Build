@@ -33,7 +33,7 @@ sn = int(snfile.read())				#serial number to identify boards, board 0 will be mi
 snfile.close()
 
 
-PORT = 5055
+PORT = 5050
 if sn == 0:
 	connection = server.Server(64, PORT, '192.168.1.18')
 else:
@@ -42,6 +42,18 @@ else:
 
 connection.connect()
 
+if sn == 0:
+	connection.send("Message 1")
+	connection.send("Message 2")
+	connection.send("Message 3")
+	connection.send("Message 4")
+
+else:
+	time.sleep(1)
+	print(connection.receive())
+	time.sleep(1)
+	print(connection.receive())
+	print(connection.receive())
 
 
 ###########################
