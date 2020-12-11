@@ -24,7 +24,7 @@ class Client:
 	def receive(self):
 		msg_received = False
 		while not msg_received:
-			msg_length = client.recv(self.HEADER).decode('utf-8')
+			msg_length = self.client.recv(self.HEADER).decode('utf-8')
 			if msg_length:
 				msg_length = int(msg_length)
 				msg = self.client.recv(msg_length).decode('utf-8')
