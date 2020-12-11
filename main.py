@@ -41,7 +41,7 @@ else:
 	connection = client.Client(64, PORT, '192.168.1.18')
 
 connection.connect()
-
+print('connected and done')
 if sn == 0:
 	time.sleep(1)
 	connection.send("Message 1")
