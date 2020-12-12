@@ -46,7 +46,7 @@ def get_state():
     return status
 
 while True:
-    state = get_piece_pos()
+    state = get_state()
     print(chr(27) + "[2J")
     for i in state:
         for j in i:
