@@ -37,13 +37,13 @@ def get_state():
 
         for j in range(len(inpins)):
             if gpio.input(inpins[j]) == 0:
-                status[i][j] = 1
+                pos[i][j] = 1
             else:
-                status[i][j] = 0
+                pos[i][j] = 0
 
         gpio.output(outpins[i], 0)
 
-    return status
+    return pos
 
 while True:
     state = get_state()
