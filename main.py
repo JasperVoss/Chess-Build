@@ -1,5 +1,7 @@
 import RPi.GPIO as gpio
-import time, motors, server, client
+import time, threading
+import motors, server, client, loadsave
+
 
 ###########################
 ####    FUNCTIONS     #####
@@ -12,21 +14,44 @@ def magnet_off():
     gpio.output(magnet_pin, 0)
 
 
-###########################
-####      CONFIG       #####
-###########################
+def led_on():
+	gpio.output(led_pin, 1)
 
-magnet_pin = 4
+def led_off():
+	gpio.output(led_pin, 0)
 
-gpio.setmode(gpio.BCM)
-gpio.setup(magnet_pin, gpio.OUT)
 
-magnet_off()
+def start_blink():
+	global led_blinking
+	led_blinking = True
+	thread = threading.Thread(target = blink)
+	thread.start()
 
+def stop_blink():
+	global led_blinking
+	led_blinking = False
+
+def blink():
+	while led_blinking:
+		led_on()
+		time.sleep(.25)
+		led_off()
+		time.sleep(.25)
+
+def getturn():
+	f = open('turn.txt', 'r')
+	return int(f.read())
+	f.close()
+def setturn(turn):
+	f = open('turn.txt', 'w')
+	return f.write(str(turn))
+	f.close()
 
 ###########################
 ####     VARIABLES     ####
 ###########################
+
+led_blinking = False
 
 snfile = open("sn.txt", 'r')
 sn = int(snfile.read())				#serial number to identify boards, board 0 will be mine and host server
@@ -34,25 +59,36 @@ snfile.close()
 
 
 PORT = 5051
-if sn == 0:
-	connection = server.Server(64, PORT, '192.168.1.18')
-else:
-#	connection = client.Client(64, PORT, '71.232.76.201')
-	connection = client.Client(64, PORT, '192.168.1.18')
+localIP = '192.168.1.18'
+globalIP = '71.232.76.201'
+localConnection = True    #Are both boards on home network?
 
+
+###########################
+####      CONFIG      #####
+###########################
+
+magnet_pin = 4
+led_pin = 100
+
+gpio.setmode(gpio.BCM)
+gpio.setup(magnet_pin, gpio.OUT)
+
+magnet_off()
+
+if sn == 0:
+	connection = server.Server(64, PORT, localIP)
+else:
+	if localConnection == True:
+		connection = client.Client(64, PORT, localIP)
+	else:
+		connection = client.Client(64, PORT, globalIP)
+
+start_blink()
 connection.connect()
-print('connected and done')
-if sn == 0:
-	time.sleep(1)
-	connection.send("Message 1")
-	connection.send("Message 2")
-	connection.send("Message 3")
+stop_blink()
 
-else:
-	print(connection.receive())
-	print(connection.receive())
-	print(connection.receive())
-
+led_on()
 
 ###########################
 ####    MAIN LOOP     #####
