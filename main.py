@@ -73,6 +73,8 @@ led_pin = 14
 
 gpio.setmode(gpio.BCM)
 gpio.setup(magnet_pin, gpio.OUT)
+gpio.setup(led_pin, gpio.OUT)
+
 
 magnet_off()
 
