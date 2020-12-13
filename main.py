@@ -69,7 +69,7 @@ localConnection = True    #Are both boards on home network?
 ###########################
 
 magnet_pin = 4
-led_pin = 100
+led_pin = 14
 
 gpio.setmode(gpio.BCM)
 gpio.setup(magnet_pin, gpio.OUT)
