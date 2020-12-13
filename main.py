@@ -58,7 +58,7 @@ sn = int(snfile.read())				#serial number to identify boards, board 0 will be mi
 snfile.close()
 
 
-PORT = 5051
+PORT = 5052
 localIP = '192.168.1.18'
 globalIP = '71.232.76.201'
 localConnection = True    #Are both boards on home network?
