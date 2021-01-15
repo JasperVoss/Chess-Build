@@ -59,7 +59,7 @@ snfile.close()
 
 turn = getturn()
 
-PORT = 5051
+PORT = 5053
 localIP = '192.168.1.21'
 globalIP = '71.232.76.201'
 localConnection = True    #Are both boards on home network?
@@ -102,12 +102,14 @@ else:
 
 state = halleffect.get_state()
 
+moved_from = [-1, -1]
+moved_to = [-1, -1]
+
 while True:
 	if turn == sn:
 		#local's turn
 		print('sensing...')
-		moved_from = [-1, -1]
-		moved_to = [-1, -1]
+		
 		new_state = halleffect.get_state()
 		for i in range(7):
 			for j in range(9):
@@ -121,6 +123,8 @@ while True:
 			connection.send(f'{moved_from[0]} {moved_from[1]} {moved_to[0]} {moved_to[1]}')
 			#turn = 1-turn
 			state = new_state
+			moved_from = [-1, -1]
+			moved_to = [-1, -1]
 	else:
 		#not local's turn
 		print('receiving...')
