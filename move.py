@@ -1,7 +1,6 @@
 import math
 import time
 import motors
-import halifax
 import RPi.GPIO as gpio
 
 magnet_pin = 4
