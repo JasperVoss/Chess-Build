@@ -66,7 +66,7 @@ snfile.close()
 
 turn = getturn()
 
-PORT = 5058
+PORT = 5059
 localIP = '192.168.1.21'
 globalIP = '71.232.76.201'
 localConnection = True    #Are both boards on home network?
@@ -172,13 +172,13 @@ while True:
 
 			if moved_from[0] > moved_to[0]:
 				for y in range(moved_to[0], moved_from[0]+1):
-					print(y)
+					print(y, state[y][moved_from[1]])
 					if state[y][moved_from[1]] == 1:
 						print('obstacle detected')
 						obstacles.append([y, moved_from[1]])
 			else:
 				for y in range(moved_from[0], moved_to[0]+1):
-					print(y)
+					print(y, state[y][moved_from[1]])
 					if state[y][moved_from[1]] == 1:
 						print('obstacle detected')
 						obstacles.append([y, moved_from[1]])
