@@ -66,7 +66,7 @@ snfile.close()
 
 turn = getturn()
 
-PORT = 5053
+PORT = 5055
 localIP = '192.168.1.21'
 globalIP = '71.232.76.201'
 localConnection = True    #Are both boards on home network?
@@ -156,22 +156,27 @@ while True:
 		magnet_on()
 		if abs(moved_from[0]-moved_to[0]) == abs(moved_from[1]-moved_to[1]):
 			#diagonal move
+			print('diagonal')
 			move.move_piece(moved_to[0], moved_to[1], .0004)
 		elif moved_from[0]-moved_to[0] == 0 or moved_from[1]-moved_to[1] == 0:
 			#straight move
+			print('straight')
 			move.move_piece(moved_to[0], moved_to[1], .0004)
 		else:
 			#weird janky move write some code later or something
+			print('weird')
 			obstacles = []
 			y_dir = math.copysign(moved_to[0]-moved_from[0], 1)
 			x_dir = math.copysign(moved_to[1]-moved_from[1], 1)
 
 			if moved_from[0] > moved_to[0]:
 				for y in range(moved_from[0], moved_to[0]+1):
+					print(y)
 					if state[y][moved_from[1]] == 1:
 						obstacles.append([y, moved_from[1]])
 			else:
 				for y in range(moved_to[0], moved_from[0]+1):
+					print(y)
 					if state[y][moved_from[1]] == 1:
 						obstacles.append([y, moved_from[1]])
 
