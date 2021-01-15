@@ -223,7 +223,7 @@ def receiving():
 def detect():
 	while True:
 		#local's turn	
-		if moving == False
+		if moving == False:
 			new_state = read_board()
 			for i in range(8):
 				for j in range(10):
