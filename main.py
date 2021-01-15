@@ -7,11 +7,18 @@ import motors, server, client, loadsave, halleffect, move
 ####    FUNCTIONS     #####
 ###########################
 
-def mirror(state):
+def full_mirror(state):
 	blank = [[0 for _ in range(10)] for _ in range(8)]
 	for i in range(8):
 		for j in range(10):
 			blank[i][j] = state[7-i][9-j]
+	return blank
+
+def x_mirror(state):
+	blank = [[0 for _ in range(10)] for _ in range(8)]
+	for i in range(8):
+		for j in range(10):
+			blank[i][j] = state[i][9-j]
 	return blank
 
 def magnet_on():
@@ -66,7 +73,7 @@ snfile.close()
 
 turn = getturn()
 
-PORT = 5060
+PORT = 5061
 localIP = '192.168.1.21'
 globalIP = '71.232.76.201'
 localConnection = True    #Are both boards on home network?
@@ -109,7 +116,9 @@ else:
 
 state = halleffect.get_state()
 if sn == 1:
-	state = mirror(state)
+	state = full_mirror(state)
+else:
+	state = x_mirror(state)
 
 moved_from = [-1, -1]
 moved_to = [-1, -1]
@@ -120,6 +129,9 @@ while True:
 		new_state = halleffect.get_state()
 		if sn == 1:
 			new_state = mirror(new_state)
+		else:
+			new_state = x_mirror(new_state)
+
 		for i in range(8):
 			for j in range(10):
 				if new_state[i][j]-state[i][j] == 1:
