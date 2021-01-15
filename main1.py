@@ -68,6 +68,8 @@ def setturn(turn):
 	f.close()
 
 def receiving():
+	global state
+	global moving
 	while True:
 		#not local's turn
 		directions = connection.receive()
@@ -157,6 +159,8 @@ def receiving():
 		moving = False
 
 def detect():
+	global state
+	global moving
 	while True:
 		#local's turn	
 		if moving == False:
@@ -191,7 +195,7 @@ snfile.close()
 
 turn = getturn()
 
-PORT = 5065
+PORT = 5066
 localIP = '192.168.1.21'
 globalIP = '71.232.76.201'
 localConnection = True    #Are both boards on home network?
