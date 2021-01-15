@@ -11,7 +11,7 @@ def mirror(state):
 	blank = [[0 for _ in range(10)] for _ in range(8)]
 	for i in range(8):
 		for j in range(10):
-			blank[i][j] = state[8-i][10-j]
+			blank[i][j] = state[7-i][9-j]
 	return blank
 
 def magnet_on():
