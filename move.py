@@ -4,7 +4,6 @@ import motors
 import RPi.GPIO as gpio
 
 magnet_pin = 4
-sleeptime = 0.00025
 
 gpio.setmode(gpio.BCM)
 gpio.setup(magnet_pin, gpio.OUT)
@@ -82,14 +81,14 @@ def calibrate():
 
     final_pos = [steps[4], steps[5]]
 
-    move([580, 30])
+    move([580, 30], 0.00025)
     for i in range(4):
         off(i)
     manual(3, -150)
     for i in range(3):
         manual(i, -8)
     save_steps(get_radii(final_pos))
-    move([500, 100])
+    move([500, 100], .00025)
 
     for i in range(4):
         manual(i, steps[i])
@@ -135,7 +134,7 @@ for i in range(len(square_coords)):
             square_coords[i][0][1]+j*(square_coords[i][9][1]-square_coords[i][0][1])/9, 2)
 
 
-def move_piece(i, j):
+def move_piece(i, j, sleeptime):
     steps = get_steps()
 
     y0 = ((steps[0]*mm_per_step_0)**2 -
@@ -165,20 +164,20 @@ def move_piece(i, j):
     else:
         x_over = 0
     y_over = math.copysign(math.sqrt(overshoot**2-x_over**2), dy)
-    move([xfinal+x_over, yfinal+y_over])
+    move([xfinal+x_over, yfinal+y_over], sleeptime)
 
 
-def move_square(i, j):
+def move_square(i, j, sleeptime):
     if i%1 == 0:
         if j%1 == 0:
-            move(square_coords[i][j])
+            move(square_coords[i][j], sleeptime)
         else:
-            move([(square_coords[i][int(j+.5)][0]+square_coords[i][int(j-.5)][0])/2, square_coords[i][int(j-.5)][1]])
+            move([(square_coords[i][int(j+.5)][0]+square_coords[i][int(j-.5)][0])/2, square_coords[i][int(j-.5)][1]], sleeptime)
     else:
         if j%1 == 0:
-            move([square_coords[int(i-.5)][j][0], (square_coords[int(i+.5)][j][1]+square_coords[int(i-.5)][j][1])/2])
+            move([square_coords[int(i-.5)][j][0], (square_coords[int(i+.5)][j][1]+square_coords[int(i-.5)][j][1])/2], sleeptime)
         else:
-            move([(square_coords[int(i-.5)][int(j+.5)][0]+square_coords[int(i-.5)][int(j-.5)][0])/2, (square_coords[int(i+.5)][int(j-.5)][1]+square_coords[int(i-.5)][int(j-.5)][1])/2])
+            move([(square_coords[int(i-.5)][int(j+.5)][0]+square_coords[int(i-.5)][int(j-.5)][0])/2, (square_coords[int(i+.5)][int(j-.5)][1]+square_coords[int(i-.5)][int(j-.5)][1])/2], sleeptime)
 
 
 
@@ -283,7 +282,7 @@ def on(motor):
         b_motors.on1()
 
 
-def move(coords):
+def move(coords, sleeptime):
     steps = get_steps()
     final = [
     round(distance([0, 0], coords)/mm_per_step_0),

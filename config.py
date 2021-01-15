@@ -34,13 +34,13 @@ while True:
 		if move.get_steps()[0] == 0:
 			move.save_steps(move.get_radii([int(input("current x: ")), int(input("current y: "))]))
 
-		move.move([int(input("final x: ")), int(input("final y: "))])
+		move.move([int(input("final x: ")), int(input("final y: "))], 0.00025)
 
 	elif inputtext == "tension":
 		move.tension()
 
 	elif inputtext == "move square":
-		move.move_square(int(input("y: ")), int(input("x: ")))
+		move.move_square(int(input("y: ")), int(input("x: ")), 0.00025)
 
 	elif inputtext == "release":
 		move.release_tension()
