@@ -36,7 +36,7 @@ class Client:
 		message = msg.encode('utf-8')
 		msg_length = len(message)
 		send_length = str(msg_length).encode('utf-8')
-		send_length += b' ' * (HEADER - len(send_length))
+		send_length += b' ' * (self.HEADER - len(send_length))
 		self.client.send(send_length)
 		self.client.send(message)
 
