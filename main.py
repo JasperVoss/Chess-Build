@@ -73,7 +73,7 @@ snfile.close()
 
 turn = getturn()
 
-PORT = 5061
+PORT = 5062
 localIP = '192.168.1.21'
 globalIP = '71.232.76.201'
 localConnection = True    #Are both boards on home network?
@@ -128,7 +128,7 @@ while True:
 		#local's turn		
 		new_state = halleffect.get_state()
 		if sn == 1:
-			new_state = mirror(new_state)
+			new_state = full_mirror(new_state)
 		else:
 			new_state = x_mirror(new_state)
 
