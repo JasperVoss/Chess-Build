@@ -7,6 +7,13 @@ import motors, server, client, loadsave, halleffect, move
 ####    FUNCTIONS     #####
 ###########################
 
+def mirror(state):
+	blank = [[0 for _ in range(10)] for _ in range(8)]
+	for i in range(8):
+		for j in range(10):
+			blank[i][j] = state[8-i][10-j]
+	return blank
+
 def magnet_on():
     gpio.output(magnet_pin, 1)
     
@@ -101,6 +108,8 @@ else:
 ###########################
 
 state = halleffect.get_state()
+if sn == 1:
+	state = mirror(state)
 
 moved_from = [-1, -1]
 moved_to = [-1, -1]
@@ -109,6 +118,8 @@ while True:
 	if turn == sn:
 		#local's turn		
 		new_state = halleffect.get_state()
+		if sn == 1:
+			new_state = mirror(new_state)
 		for i in range(8):
 			for j in range(10):
 				if new_state[i][j]-state[i][j] == 1:
