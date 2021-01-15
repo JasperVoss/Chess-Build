@@ -166,9 +166,16 @@ while True:
 			y_dir = math.copysign(moved_to[0]-moved_from[0], 1)
 			x_dir = math.copysign(moved_to[1]-moved_from[1], 1)
 
-			for y in range(moved_from[0], moved_to[0]):
-				if state[y][moved_from[1]] == 1:
-					obstacles.append([y, moved_from[1]])
+			if moved_from[0] > moved_to[0]:
+				for y in range(moved_from[0], moved_to[0]+1):
+					if state[y][moved_from[1]] == 1:
+						obstacles.append([y, moved_from[1]])
+			else:
+				for y in range(moved_to[0], moved_from[0]+1):
+					if state[y][moved_from[1]] == 1:
+						obstacles.append([y, moved_from[1]])
+
+
 			if len(obstacles) == 0:
 				move.move_piece(moved_to[0], moved_from[1], .0004)
 				move.move_piece(moved_to[0], moved_to[1], .0004)
