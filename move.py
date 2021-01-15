@@ -4,7 +4,7 @@ import motors
 import RPi.GPIO as gpio
 
 magnet_pin = 4
-sleeptime = 0.0001
+sleeptime = 0.00025
 
 gpio.setmode(gpio.BCM)
 gpio.setup(magnet_pin, gpio.OUT)
