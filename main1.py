@@ -155,7 +155,6 @@ def receiving():
 
 		magnet_off()
 		state = read_board()
-		turn = 1-turn
 		moved_from = [-1, -1]
 		moved_to = [-1, -1]
 		moving = False
@@ -181,7 +180,6 @@ def detect():
 						moved_from[1] = j
 			if moved_from[0] != -1 and moved_from[1] != -1 and moved_to[0] != -1 and moved_to[1] != -1:
 				connection.send(f'{moved_from[0]} {moved_from[1]} {moved_to[0]} {moved_to[1]}')
-				turn = 1-turn
 				state = new_state[:]
 				moved_from = [-1, -1]
 				moved_to = [-1, -1]
@@ -199,7 +197,7 @@ snfile.close()
 
 turn = getturn()
 
-PORT = 5067
+PORT = 5068
 localIP = '192.168.1.21'
 globalIP = '71.232.76.201'
 localConnection = True    #Are both boards on home network?
