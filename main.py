@@ -73,7 +73,7 @@ snfile.close()
 
 turn = getturn()
 
-PORT = 5066
+PORT = 5067
 localIP = '192.168.1.21'
 globalIP = '71.232.76.201'
 localConnection = True    #Are both boards on home network?
@@ -225,4 +225,6 @@ while True:
 
 		magnet_off()
 		state = halleffect.get_state()
+		for i in state:
+			print(i)
 
