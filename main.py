@@ -79,7 +79,7 @@ snfile.close()
 
 turn = getturn()
 
-PORT = 5054
+PORT = 5055
 localIP = '192.168.1.21'
 globalIP = '71.232.76.201'
 localConnection = True    #Are both boards on home network?
@@ -141,14 +141,11 @@ while True:
 					moved_from[0] = i
 					moved_from[1] = j
 		if moved_from[0] != -1 and moved_from[1] != -1 and moved_to[0] != -1 and moved_to[1] != -1:
-			print(moved_from, moved_to)
 			connection.send(f'{moved_from[0]} {moved_from[1]} {moved_to[0]} {moved_to[1]}')
 			turn = 1-turn
 			state = new_state[:]
-			moved_from[0] = -1
-			moved_from[1] = -1
-			moved_to[0] = -1
-			moved_to[1] = -1
+			moved_from = [-1, -1]
+			moved_to = [-1, -1]
 	else:
 		#not local's turn
 		directions = connection.receive()
@@ -234,4 +231,6 @@ while True:
 		for i in state:
 			print(i)
 		turn = 1-turn
+		moved_from = [-1, -1]
+		moved_to = [-1, -1]
 
