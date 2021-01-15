@@ -33,6 +33,7 @@ class Client:
 
 
 	def send(self, msg):
+		print(f'Sending: {msg}')
 		message = msg.encode('utf-8')
 		msg_length = len(message)
 		send_length = str(msg_length).encode('utf-8')
