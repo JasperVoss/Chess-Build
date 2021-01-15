@@ -73,7 +73,7 @@ snfile.close()
 
 turn = getturn()
 
-PORT = 5067
+PORT = 5068
 localIP = '192.168.1.21'
 globalIP = '71.232.76.201'
 localConnection = True    #Are both boards on home network?
@@ -205,7 +205,12 @@ while True:
 					if state[moved_from[0]][x] == 1:
 						xobstacles.append([moved_to[0], x])
 
-
+			print('Y Obstacles:')
+			for i in yobstacles:
+				print(i)
+			print('X Obstacles:')
+			for i in xobstacles:
+				print(i)
 			if len(yobstacles) == 0 and len(xobstacles) == 0:
 				move.move_piece(moved_to[0], moved_from[1], .0004)
 				move.move_piece(moved_to[0], moved_to[1], .0004)
