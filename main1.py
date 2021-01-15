@@ -183,6 +183,8 @@ def detect():
 				state = new_state[:]
 				moved_from = [-1, -1]
 				moved_to = [-1, -1]
+		else:
+			time.sleep(2)
 
 
 ###########################
@@ -197,7 +199,7 @@ snfile.close()
 
 turn = getturn()
 
-PORT = 5068
+PORT = 5069
 localIP = '192.168.1.21'
 globalIP = '71.232.76.201'
 localConnection = True    #Are both boards on home network?
