@@ -142,7 +142,7 @@ while True:
 					moved_from[1] = j
 		if moved_from[0] != -1 and moved_from[1] != -1 and moved_to[0] != -1 and moved_to[1] != -1:
 			connection.send(f'{moved_from[0]} {moved_from[1]} {moved_to[0]} {moved_to[1]}')
-			#turn = 1-turn
+			turn = 1-turn
 			state = new_state
 			moved_from = [-1, -1]
 			moved_to = [-1, -1]
@@ -230,4 +230,5 @@ while True:
 		state = read_board()
 		for i in state:
 			print(i)
+		turn = 1-turn
 
