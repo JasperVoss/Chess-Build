@@ -177,29 +177,50 @@ while True:
 		else:
 			#weird janky move write some code later or something
 			print('weird')
-			obstacles = []
+			yobstacles = []
+			xobstacles = []
+
+			x_dir = math.copysign(1, moved_to[1]-moved_from[1])
+			y_dir = math.copysign(1, moved_to[0]-moved_from[0])
 
 			print(f'moved from: {moved_from[0], moved_from[1]}')
 			print(f'moved to: {moved_to[0], moved_to[1]}')
 
 			if moved_from[0] > moved_to[0]:
 				for y in range(moved_to[0]+1, moved_from[0]+1):
-					print(y, state[y][moved_from[1]])
 					if state[y][moved_from[1]] == 1:
-						print('obstacle detected')
-						obstacles.append([y, moved_from[1]])
+						yobstacles.append([y, moved_from[1]])
 			else:
 				for y in range(moved_from[0]+1, moved_to[0]+1):
-					print(y, state[y][moved_from[1]])
-					print(state)
 					if state[y][moved_from[1]] == 1:
-						print('obstacle detected')
-						obstacles.append([y, moved_from[1]])
+						yobstacles.append([y, moved_from[1]])
+
+			if moved_from[1] > moved_to[1]:
+				for x in range(moved_to[1]+1, moved_from[1]+1):
+					if state[moved_to[0]][x] == 1:
+						xobstacles.append([moved_to[0], x])
+
+			else:
+				for x in range(moved_from[1]+1, moved_to[1]+1):
+					if state[moved_to[0]][x] == 1:
+						xobstacles.append([moved_to[0], x])
 
 
-			if len(obstacles) == 0:
+			if len(yobstacles) == 0 and len(xobstacles) == 0:
 				move.move_piece(moved_to[0], moved_from[1], .0004)
 				move.move_piece(moved_to[0], moved_to[1], .0004)
+			elif len(yobstacles) == 0:
+				move.move_piece(moved_to[0]-y_dir/2, moved_from[1], .0004)
+				move.move_piece(moved_to[0]-y_dir/2, moved_to[1], .0004)
+				move.move_piece(moved_to[0], moved_to[1], .0004)
+			elif len(xobstacles) == 0:
+				move.move_piece(moved_from[0], moved_from[1]+x_dir/2, .0004)
+				move.move_piece(moved_to[0], moved_from[1]+x_dir/2, .0004)
+				move.move_piece(moved_to[0], moved_to[1], .0004)
 			else:
-				print('obstruction')
+				move.move_piece(moved_from[0], moved_from[1]+x_dir/2, .0004)
+				move.move_piece(moved_to[0]-y_dir/2, moved_from[1]+x_dir/2, .0004)
+				move.move_piece(moved_to[0]-y_dir/2, moved_to[1], .0004)
+				move.move_piece(moved_to[0], moved_to[1], .0004)
+
 		magnet_off()
