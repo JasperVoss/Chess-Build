@@ -59,7 +59,7 @@ snfile.close()
 
 turn = getturn()
 
-PORT = 5061
+PORT = 5063
 localIP = '192.168.1.21'
 globalIP = '71.232.76.201'
 localConnection = True    #Are both boards on home network?
@@ -112,8 +112,8 @@ while True:
 		print('sensing...')
 		
 		new_state = halleffect.get_state()
-		for i in range(7):
-			for j in range(9):
+		for i in range(8):
+			for j in range(10):
 				if new_state[i][j]-state[i][j] == 1:
 					print(f'moved to: {i, j}')
 					moved_to[0] = i
