@@ -66,7 +66,7 @@ snfile.close()
 
 turn = getturn()
 
-PORT = 5055
+PORT = 5056
 localIP = '192.168.1.21'
 globalIP = '71.232.76.201'
 localConnection = True    #Are both boards on home network?
@@ -166,8 +166,9 @@ while True:
 			#weird janky move write some code later or something
 			print('weird')
 			obstacles = []
-			y_dir = math.copysign(moved_to[0]-moved_from[0], 1)
-			x_dir = math.copysign(moved_to[1]-moved_from[1], 1)
+
+			print(f'moved from: {moved_from[0], moved_from[1]}')
+			print(f'moved to: {moved_to[0], moved_to[1]}')
 
 			if moved_from[0] > moved_to[0]:
 				for y in range(moved_from[0], moved_to[0]+1):
