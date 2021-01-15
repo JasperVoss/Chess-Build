@@ -125,34 +125,14 @@ state = read_board()
 moved_from = [-1, -1]
 moved_to = [-1, -1]
 
+moving = False
 receive_thread = threading.Thread(target = 'receiving')
 
 def receiving():
-
-while True:
-	if turn == sn:
-		#local's turn		
-		new_state = read_board()
-
-		for i in range(8):
-			for j in range(10):
-				if new_state[i][j]-state[i][j] == 1:
-					print(f'moved to: {i, j}')
-					moved_to[0] = i
-					moved_to[1] = j
-				elif new_state[i][j]-state[i][j] == -1:
-					print(f'moved from: {i, j}')
-					moved_from[0] = i
-					moved_from[1] = j
-		if moved_from[0] != -1 and moved_from[1] != -1 and moved_to[0] != -1 and moved_to[1] != -1:
-			connection.send(f'{moved_from[0]} {moved_from[1]} {moved_to[0]} {moved_to[1]}')
-			turn = 1-turn
-			state = new_state[:]
-			moved_from = [-1, -1]
-			moved_to = [-1, -1]
-	else:
+	while True:
 		#not local's turn
 		directions = connection.receive()
+		moving = True
 		ls = []
 		temp = ''
 		for i in directions:
@@ -232,9 +212,29 @@ while True:
 
 		magnet_off()
 		state = read_board()
-		for i in state:
-			print(i)
 		turn = 1-turn
 		moved_from = [-1, -1]
 		moved_to = [-1, -1]
+		moving = False
 
+def detect():
+	while True:
+		#local's turn	
+		if moving == False
+			new_state = read_board()
+			for i in range(8):
+				for j in range(10):
+					if new_state[i][j]-state[i][j] == 1:
+						print(f'moved to: {i, j}')
+						moved_to[0] = i
+						moved_to[1] = j
+					elif new_state[i][j]-state[i][j] == -1:
+						print(f'moved from: {i, j}')
+						moved_from[0] = i
+						moved_from[1] = j
+			if moved_from[0] != -1 and moved_from[1] != -1 and moved_to[0] != -1 and moved_to[1] != -1:
+				connection.send(f'{moved_from[0]} {moved_from[1]} {moved_to[0]} {moved_to[1]}')
+				turn = 1-turn
+				state = new_state[:]
+				moved_from = [-1, -1]
+				moved_to = [-1, -1]
