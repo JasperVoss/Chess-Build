@@ -67,70 +67,6 @@ def setturn(turn):
 	return f.write(str(turn))
 	f.close()
 
-###########################
-####     VARIABLES     ####
-###########################
-
-led_blinking = False
-
-snfile = open("sn.txt", 'r')
-sn = int(snfile.read())				#serial number to identify boards, board 0 will be mine and host server
-snfile.close()
-
-turn = getturn()
-
-PORT = 5064
-localIP = '192.168.1.21'
-globalIP = '71.232.76.201'
-localConnection = True    #Are both boards on home network?
-
-
-###########################
-####      CONFIG      #####
-###########################
-
-magnet_pin = 4
-led_pin = 14
-
-gpio.setmode(gpio.BCM)
-gpio.setup(magnet_pin, gpio.OUT)
-gpio.setup(led_pin, gpio.OUT)
-
-
-magnet_off()
-
-if sn == 0:
-	connection = server.Server(64, PORT, localIP)
-else:
-	if localConnection == True:
-		connection = client.Client(64, PORT, localIP)
-	else:
-		connection = client.Client(64, PORT, globalIP)
-
-start_blink()
-connection.connect()
-stop_blink()
-
-if turn == sn:
-	led_on()
-else:
-	led_off()
-
-###########################
-####    MAIN LOOP     #####
-###########################
-
-state = read_board()
-
-moved_from = [-1, -1]
-moved_to = [-1, -1]
-
-moving = False
-receive_thread = threading.Thread(target = receiving)
-detect_thread = threading.Thread(target = detect)
-receive_thread.start()
-detect_thread.start()
-
 def receiving():
 	while True:
 		#not local's turn
@@ -241,3 +177,69 @@ def detect():
 				state = new_state[:]
 				moved_from = [-1, -1]
 				moved_to = [-1, -1]
+
+
+###########################
+####     VARIABLES     ####
+###########################
+
+led_blinking = False
+
+snfile = open("sn.txt", 'r')
+sn = int(snfile.read())				#serial number to identify boards, board 0 will be mine and host server
+snfile.close()
+
+turn = getturn()
+
+PORT = 5065
+localIP = '192.168.1.21'
+globalIP = '71.232.76.201'
+localConnection = True    #Are both boards on home network?
+
+
+###########################
+####      CONFIG      #####
+###########################
+
+magnet_pin = 4
+led_pin = 14
+
+gpio.setmode(gpio.BCM)
+gpio.setup(magnet_pin, gpio.OUT)
+gpio.setup(led_pin, gpio.OUT)
+
+
+magnet_off()
+
+if sn == 0:
+	connection = server.Server(64, PORT, localIP)
+else:
+	if localConnection == True:
+		connection = client.Client(64, PORT, localIP)
+	else:
+		connection = client.Client(64, PORT, globalIP)
+
+start_blink()
+connection.connect()
+stop_blink()
+
+if turn == sn:
+	led_on()
+else:
+	led_off()
+
+###########################
+####    MAIN LOOP     #####
+###########################
+
+state = read_board()
+
+moved_from = [-1, -1]
+moved_to = [-1, -1]
+
+moving = False
+receive_thread = threading.Thread(target = receiving)
+detect_thread = threading.Thread(target = detect)
+receive_thread.start()
+detect_thread.start()
+
