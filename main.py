@@ -59,7 +59,7 @@ snfile.close()
 
 turn = getturn()
 
-PORT = 5060
+PORT = 5061
 localIP = '192.168.1.21'
 globalIP = '71.232.76.201'
 localConnection = True    #Are both boards on home network?
@@ -101,6 +101,7 @@ else:
 ###########################
 
 state = halleffect.get_state()
+print(state)
 
 moved_from = [-1, -1]
 moved_to = [-1, -1]
