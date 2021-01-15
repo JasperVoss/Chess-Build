@@ -79,7 +79,7 @@ snfile.close()
 
 turn = getturn()
 
-PORT = 5062
+PORT = 5063
 localIP = '192.168.1.21'
 globalIP = '71.232.76.201'
 localConnection = True    #Are both boards on home network?
@@ -127,6 +127,9 @@ moved_to = [-1, -1]
 
 moving = False
 receive_thread = threading.Thread(target = 'receiving')
+detect_thread = threading.Thread(target = 'detect')
+receive_thread.start()
+detect_thread.start()
 
 def receiving():
 	while True:
