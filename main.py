@@ -1,5 +1,5 @@
 import RPi.GPIO as gpio
-import time, threading
+import time, threading, math
 import motors, server, client, loadsave, halleffect, move
 
 
@@ -66,7 +66,7 @@ snfile.close()
 
 turn = getturn()
 
-PORT = 5051
+PORT = 5052
 localIP = '192.168.1.21'
 globalIP = '71.232.76.201'
 localConnection = True    #Are both boards on home network?
@@ -162,5 +162,16 @@ while True:
 			move.move_piece(moved_to[0], moved_to[1], .0004)
 		else:
 			#weird janky move write some code later or something
-			move.move_piece(moved_to[0], moved_to[1], .0004)
+			obstacles = []
+			y_dir = math.copysign(moved_to[0]-moved_from[0], 1)
+			x_dir = math.copysign(moved_to[1]-moved_from[1], 1)
+
+			for y in range(moved_from[0], moved_to[0]):
+				if state[y][moved_from[1]] == 1:
+					obstacles.append([y, moved_from[1]])
+			if len(obstacles) == 0:
+				move.move_piece(moved_to[0], moved_from[1], .0004)
+				move.move_piece(moved_to[0], moved_to[1], .0004)
+			else:
+				print('obstruction')
 		magnet_off()
