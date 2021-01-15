@@ -59,7 +59,7 @@ snfile.close()
 
 turn = getturn()
 
-PORT = 5069
+PORT = 5070
 localIP = '192.168.1.21'
 globalIP = '71.232.76.201'
 localConnection = True    #Are both boards on home network?
