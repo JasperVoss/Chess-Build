@@ -59,7 +59,7 @@ snfile.close()
 
 turn = getturn()
 
-PORT = 5066
+PORT = 5068
 localIP = '192.168.1.21'
 globalIP = '71.232.76.201'
 localConnection = True    #Are both boards on home network?
@@ -156,3 +156,4 @@ while True:
 		else:
 			#weird janky move write some code later or something
 			move.move_piece(moved_to[0], moved_to[1])
+		magnet_off()
