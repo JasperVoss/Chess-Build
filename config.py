@@ -39,6 +39,9 @@ while True:
 	elif inputtext == "tension":
 		move.tension()
 
+	elif inputtext == "move square":
+		move.move_square(int(input("x: ")), int(input("y: ")))
+
 	elif inputtext == "release":
 		move.release_tension()
 
@@ -48,9 +51,24 @@ while True:
 	elif inputtext == "calibrate":
 		move.calibrate()
 
+	elif inputtext == "calibrate squares":
+		move.calibrate_squares(move.square_coords[6][1])
+
+	elif inputtext == "all":
+		steps = int(input("steps: "))
+		for i in range(steps):
+			for j in range(4):
+				move.manual(j, -1)
+
 	elif inputtext == "motors on":
 		for i in range(4):
 			move.on(i)
-
+	elif inputtext == "show state":
+	    state = halifax.get_state()
+	    print(chr(27) + "[2J")
+	    for i in state:
+	        for j in i:
+	            print(j, end = "  ")
+	        print("")
 	elif inputtext == "":
 		break
