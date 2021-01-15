@@ -1,6 +1,6 @@
 import RPi.GPIO as gpio
 import time, threading
-import motors, server, client, loadsave
+import motors, server, client, loadsave, halleffect
 
 
 ###########################
@@ -34,9 +34,9 @@ def stop_blink():
 def blink():
 	while led_blinking:
 		led_on()
-		time.sleep(.25)
+		time.sleep(.1)
 		led_off()
-		time.sleep(.25)
+		time.sleep(.1)
 
 def getturn():
 	f = open('turn.txt', 'r')
@@ -57,6 +57,7 @@ snfile = open("sn.txt", 'r')
 sn = int(snfile.read())				#serial number to identify boards, board 0 will be mine and host server
 snfile.close()
 
+turn = getturn()
 
 PORT = 5052
 localIP = '192.168.1.18'
@@ -90,8 +91,58 @@ start_blink()
 connection.connect()
 stop_blink()
 
-led_on()
+if turn == sn:
+	led_on()
+else:
+	led_off()
 
 ###########################
 ####    MAIN LOOP     #####
 ###########################
+
+state = halleffect.get_state()
+
+while True:
+	if turn == sn:
+		#local's turn
+		moved_from = [-1, -1]
+		moved_to = [-1, -1]
+		new_state = halleffect.get_state()
+		for i in range(len(new_state)):
+			for j in range(len(i)):
+				if new_state[i][j]-state[i][j] == 1:
+					moved_to[0] = i
+					moved_to[1] = j
+				elif new_state[i][j]-state[i][j] == -1:
+					moved_from[0] = i
+					moved_from[1] = j
+		if moved_from[0] != -1 and moved_from[1] != -1 and moved_to[0] != -1 and moved_to[1] != -1:
+			connection.send(f'{moved_from[0]} {moved_from[1]} {moved_to[0]} {moved_to[1]}')
+			#turn = 1-turn
+			state = new_state
+	else:
+		#not local's turn
+		directions = connection.receive()
+		ls = []
+		temp = ''
+		for i in directions:
+			if i == ' ':
+				ls.append(temp)
+			else:
+				temp = temp + i
+		ls.append(temp)
+		moved_from = [ls[0], ls[1]]
+		moved_to = [ls[2], ls[3]]
+
+		#moving stuff
+		move.move_square(moved_from[0], moved_from[1])
+		magnet_on()
+		if abs(moved_from[0]-moved_to[0]) == abs(moved_from[1]-moved_to[1]):
+			#diagonal move
+			move.move_piece(moved_to[0], moved_to[1])
+		elif moved_from[0]-moved_to[0] == 0 or moved_from[1]-moved_to[1] == 0:
+			#straight move
+			move.move_piece(moved_to[0], moved_to[1])
+		else:
+			#weird janky move write some code later or something
+			move.move_piece(moved_to[0], moved_to[1])
