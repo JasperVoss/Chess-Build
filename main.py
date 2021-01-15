@@ -1,6 +1,6 @@
 import RPi.GPIO as gpio
 import time, threading
-import motors, server, client, loadsave, halleffect
+import motors, server, client, loadsave, halleffect, move
 
 
 ###########################
@@ -59,7 +59,7 @@ snfile.close()
 
 turn = getturn()
 
-PORT = 5058
+PORT = 5059
 localIP = '192.168.1.21'
 globalIP = '71.232.76.201'
 localConnection = True    #Are both boards on home network?
