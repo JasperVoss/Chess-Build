@@ -21,6 +21,12 @@ def x_mirror(state):
 			blank[i][j] = state[i][9-j]
 	return blank
 
+def read_board():
+	if sn == 1:
+		return full_mirror(halleffect.get_state())
+	else:
+		return x_mirror(halleffect.get_state())
+
 def magnet_on():
     gpio.output(magnet_pin, 1)
     
@@ -73,7 +79,7 @@ snfile.close()
 
 turn = getturn()
 
-PORT = 5070
+PORT = 5071
 localIP = '192.168.1.21'
 globalIP = '71.232.76.201'
 localConnection = True    #Are both boards on home network?
@@ -114,11 +120,7 @@ else:
 ####    MAIN LOOP     #####
 ###########################
 
-state = halleffect.get_state()
-if sn == 1:
-	state = full_mirror(state)
-else:
-	state = x_mirror(state)
+state = read_board()
 
 moved_from = [-1, -1]
 moved_to = [-1, -1]
@@ -126,11 +128,7 @@ moved_to = [-1, -1]
 while True:
 	if turn == sn:
 		#local's turn		
-		new_state = halleffect.get_state()
-		if sn == 1:
-			new_state = full_mirror(new_state)
-		else:
-			new_state = x_mirror(new_state)
+		new_state = read_board()
 
 		for i in range(8):
 			for j in range(10):
@@ -229,7 +227,7 @@ while True:
 				move.move_piece(moved_to[0], moved_to[1], .0004)
 
 		magnet_off()
-		state = halleffect.get_state()
+		state = read_board()
 		for i in state:
 			print(i)
 
