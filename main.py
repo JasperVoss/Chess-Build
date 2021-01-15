@@ -59,7 +59,7 @@ snfile.close()
 
 turn = getturn()
 
-PORT = 5063
+PORT = 5064
 localIP = '192.168.1.21'
 globalIP = '71.232.76.201'
 localConnection = True    #Are both boards on home network?
@@ -136,6 +136,7 @@ while True:
 		temp = ''
 		for i in directions:
 			if i == ' ':
+				temp = int(temp)
 				ls.append(temp)
 			else:
 				temp = temp + i
