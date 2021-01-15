@@ -59,7 +59,7 @@ snfile.close()
 
 turn = getturn()
 
-PORT = 5055
+PORT = 5056
 localIP = '192.168.1.21'
 globalIP = '71.232.76.201'
 localConnection = True    #Are both boards on home network?
@@ -114,9 +114,11 @@ while True:
 		for i in range(7):
 			for j in range(9):
 				if new_state[i][j]-state[i][j] == 1:
+					print(f'moved to: {i, j}')
 					moved_to[0] = i
 					moved_to[1] = j
 				elif new_state[i][j]-state[i][j] == -1:
+					print(f'moved from: {i, j}')
 					moved_from[0] = i
 					moved_from[1] = j
 		if moved_from[0] != -1 and moved_from[1] != -1 and moved_to[0] != -1 and moved_to[1] != -1:
