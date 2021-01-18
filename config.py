@@ -40,7 +40,7 @@ while True:
 		move.tension()
 
 	elif inputtext == "move square":
-		move.move_square(int(input("y: ")), int(input("x: ")), 0.00025)
+		move.move_square(int(input("y: ")), int(input("x: ")), 0.0004)
 
 	elif inputtext == "release":
 		move.release_tension()
