@@ -137,11 +137,11 @@ def receiving():
 					move.move_piece(moved_to[0], moved_to[1], .0004)
 				else:
 					if moved_from[1] > 4:
-						move.move_piece(moved_from[0] moved_from[1]-.5)
+						move.move_piece(moved_from[0], moved_from[1]-.5)
 						move.move_piece(moved_to[0], moved_to[1]-.5)
 						move.move_piece(moved_to[0], moved_to[1])
 					else:
-						move.move_piece(moved_from[0] moved_from[1]+.5)
+						move.move_piece(moved_from[0], moved_from[1]+.5)
 						move.move_piece(moved_to[0], moved_to[1]+.5)
 						move.move_piece(moved_to[0], moved_to[1])		
 		else:
