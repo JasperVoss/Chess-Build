@@ -95,10 +95,10 @@ def receiving():
 			#diagonal move
 			print('diagonal')
 			move.move_piece(moved_to[0], moved_to[1], .0004)
-		elif moved_from[0]-moved_to[0] == 0 or moved_from[1]-moved_to[1] == 0:
-			#straight move
-			print('straight')
-			move.move_piece(moved_to[0], moved_to[1], .0004)
+		# elif moved_from[0]-moved_to[0] == 0 or moved_from[1]-moved_to[1] == 0:
+		# 	#straight move
+		# 	print('straight')
+		# 	move.move_piece(moved_to[0], moved_to[1], .0004)
 		else:
 			#weird janky move write some code later or something
 			print('weird')
