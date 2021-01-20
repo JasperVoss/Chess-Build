@@ -116,13 +116,13 @@ def receiving():
 					move.move_piece(moved_to[0], moved_to[1], .0004)
 				else:
 					if moved_from[0] > 4:
-						move.move_piece(moved_from[0]-.5, moved_from[1])
-						move.move_piece(moved_from[0]-.5, moved_to[1])
-						move.move_piece(moved_from[0], moved_to[1])
+						move.move_piece(moved_from[0]-.5, moved_from[1], .0004)
+						move.move_piece(moved_from[0]-.5, moved_to[1], .0004)
+						move.move_piece(moved_from[0], moved_to[1], .0004)
 					else:
-						move.move_piece(moved_from[0]+.5, moved_from[1])
-						move.move_piece(moved_from[0]+.5, moved_to[1])
-						move.move_piece(moved_from[0], moved_to[1])
+						move.move_piece(moved_from[0]+.5, moved_from[1], .0004)
+						move.move_piece(moved_from[0]+.5, moved_to[1], .0004)
+						move.move_piece(moved_from[0], moved_to[1], .0004)
 			else:
 				#moved in the y direction
 				if moved_from[0] > moved_to[0]:
@@ -137,13 +137,13 @@ def receiving():
 					move.move_piece(moved_to[0], moved_to[1], .0004)
 				else:
 					if moved_from[1] > 4:
-						move.move_piece(moved_from[0], moved_from[1]-.5)
-						move.move_piece(moved_to[0], moved_to[1]-.5)
-						move.move_piece(moved_to[0], moved_to[1])
+						move.move_piece(moved_from[0], moved_from[1]-.5, .0004)
+						move.move_piece(moved_to[0], moved_to[1]-.5, .0004)
+						move.move_piece(moved_to[0], moved_to[1], .0004)
 					else:
-						move.move_piece(moved_from[0], moved_from[1]+.5)
-						move.move_piece(moved_to[0], moved_to[1]+.5)
-						move.move_piece(moved_to[0], moved_to[1])		
+						move.move_piece(moved_from[0], moved_from[1]+.5, .0004)
+						move.move_piece(moved_to[0], moved_to[1]+.5, .0004)
+						move.move_piece(moved_to[0], moved_to[1], .0004)		
 		else:
 			print('weird')
 			yobstacles = []
