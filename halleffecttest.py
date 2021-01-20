@@ -56,4 +56,4 @@ while True:
         for j in i:
             print(j, end = '  ')
         print('')
-    print(0)
+    print(k)
