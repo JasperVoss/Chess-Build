@@ -47,10 +47,13 @@ def get_state(l, u):
 
 lower = int(input('lower: '))
 upper = int(input('upper: '))
+k = 0
 while True:
+    k += 1
     state = get_state(lower, upper)
     print('\n' * 80)
     for i in state:
         for j in i:
             print(j, end = '  ')
         print('')
+    print(0)
