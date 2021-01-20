@@ -180,7 +180,8 @@ def move_square(i, j, sleeptime):
             move([(square_coords[int(i-.5)][int(j+.5)][0]+square_coords[int(i-.5)][int(j-.5)][0])/2, (square_coords[int(i+.5)][int(j-.5)][1]+square_coords[int(i-.5)][int(j-.5)][1])/2], sleeptime)
 
 
-
+def center_square(i, j):
+    pass
 
 def tension():
     num_steps = 4

@@ -154,6 +154,7 @@ def receiving():
 				move.move_piece(moved_to[0], moved_to[1], .0004)
 
 		magnet_off()
+		move.center_square(moved_to[0], moved_to[1])
 		state = read_board()
 		moved_from = [-1, -1]
 		moved_to = [-1, -1]
@@ -240,6 +241,8 @@ else:
 ####    MAIN LOOP     #####
 ###########################
 
+state = read_board()
+state = read_board()
 state = read_board()
 
 moved_from = [-1, -1]
