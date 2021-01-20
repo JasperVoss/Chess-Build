@@ -26,14 +26,14 @@ def get_state(l, u):
             gpio.setup(p, gpio.OUT)
             gpio.output(p, 0)
 
-        time.sleep(.15)
+        time.sleep(.09)
 
         for p in inpins:
             gpio.setup(p, gpio.IN)
 
         gpio.output(outpins[i], 1)
 
-        time.sleep(.15)
+        time.sleep(.09)
 
         for j in range(len(inpins)):
             if gpio.input(inpins[j]) == 0:
