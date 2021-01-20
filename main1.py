@@ -95,12 +95,56 @@ def receiving():
 			#diagonal move
 			print('diagonal')
 			move.move_piece(moved_to[0], moved_to[1], .0004)
-		# elif moved_from[0]-moved_to[0] == 0 or moved_from[1]-moved_to[1] == 0:
-		# 	#straight move
-		# 	print('straight')
-		# 	move.move_piece(moved_to[0], moved_to[1], .0004)
+		elif moved_from[0]-moved_to[0] == 0 or moved_from[1]-moved_to[1] == 0:
+			#straight move
+			print('straight')
+
+			yobstacles = []
+			xobstacles = []
+
+			if moved_from[0]-moved_to[0] == 0:
+				#moved in the x direction
+				if moved_from[1] > moved_to[1]:
+					for x in range(moved_to[1], moved_from[1]):
+						if state[moved_from[0]][x] == 1:
+							xobstacles.append([moved_from[0], x])
+				else:
+					for x in range(moved_from[1]+1, moved_to[1]+1):
+						if state[moved_from[0]][x] == 1:
+							xobstacles.append([moved_from[0], x])
+				if len(xobstacles) == 0:
+					move.move_piece(moved_to[0], moved_to[1], .0004)
+				else:
+					if moved_from[0] > 4:
+						move.move_piece(moved_from[0]-.5, moved_from[1])
+						move.move_piece(moved_from[0]-.5, moved_to[1])
+						move.move_piece(moved_from[0], moved_to[1])
+					else:
+						move.move_piece(moved_from[0]+.5, moved_from[1])
+						move.move_piece(moved_from[0]+.5, moved_to[1])
+						move.move_piece(moved_from[0], moved_to[1])
+			else:
+				#moved in the y direction
+				if moved_from[0] > moved_to[0]:
+					for y in range(moved_to[0], moved_from[0]):
+						if state[y][moved_from[1]] == 1:
+							yobstacles.append([y, moved_from[1]])
+				else:
+					for y in range(moved_from[0]+1, moved_to[0]+1):
+						if state[y][moved_from[1]] == 1:
+							yobstacles.append([y, moved_from[1]])
+				if len(yobstacles) == 0:
+					move.move_piece(moved_to[0], moved_to[1], .0004)
+				else:
+					if moved_from[1] > 4:
+						move.move_piece(moved_from[0] moved_from[1]-.5)
+						move.move_piece(moved_to[0], moved_to[1]-.5)
+						move.move_piece(moved_to[0], moved_to[1])
+					else:
+						move.move_piece(moved_from[0] moved_from[1]+.5)
+						move.move_piece(moved_to[0], moved_to[1]+.5)
+						move.move_piece(moved_to[0], moved_to[1])		
 		else:
-			#weird janky move write some code later or something
 			print('weird')
 			yobstacles = []
 			xobstacles = []
