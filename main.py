@@ -93,8 +93,10 @@ gpio.setup(led_pin, gpio.OUT)
 
 magnet_off()
 
-move.move([516, 100], .00025)
+move.move([500, 100], .00025)
 time.sleep(.1)
-move.move([516, 100], .00025)
+move.move([100, 100], .00025)
+time.sleep(.1)
+move.move([400, 100], .00025)
 time.sleep(.1)
 move.move([300, 250], .00025)
