@@ -36,5 +36,3 @@ class Server:
 		self.conn.send(send_length)
 		self.conn.send(message)
 
-
-

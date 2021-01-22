@@ -77,12 +77,6 @@ snfile = open("sn.txt", 'r')
 sn = int(snfile.read())				#serial number to identify boards, board 0 will be mine and host server
 snfile.close()
 
-turn = getturn()
-
-PORT = 5062
-localIP = '192.168.1.21'
-globalIP = '71.232.76.201'
-localConnection = True    #Are both boards on home network?
 
 
 ###########################
@@ -99,142 +93,36 @@ gpio.setup(led_pin, gpio.OUT)
 
 magnet_off()
 
-if sn == 0:
-	connection = server.Server(64, PORT, localIP)
-else:
-	if localConnection == True:
-		connection = client.Client(64, PORT, localIP)
-	else:
-		connection = client.Client(64, PORT, globalIP)
-
-start_blink()
-connection.connect()
-stop_blink()
-
-if turn == sn:
-	led_on()
-else:
-	led_off()
-
-###########################
-####    MAIN LOOP     #####
-###########################
-
-state = read_board()
-
-moved_from = [-1, -1]
-moved_to = [-1, -1]
-
-receive_thread = threading.Thread(target = 'receiving')
-
-def receiving():
-
-while True:
-	if turn == sn:
-		#local's turn		
-		new_state = read_board()
-
-		for i in range(8):
-			for j in range(10):
-				if new_state[i][j]-state[i][j] == 1:
-					print(f'moved to: {i, j}')
-					moved_to[0] = i
-					moved_to[1] = j
-				elif new_state[i][j]-state[i][j] == -1:
-					print(f'moved from: {i, j}')
-					moved_from[0] = i
-					moved_from[1] = j
-		if moved_from[0] != -1 and moved_from[1] != -1 and moved_to[0] != -1 and moved_to[1] != -1:
-			connection.send(f'{moved_from[0]} {moved_from[1]} {moved_to[0]} {moved_to[1]}')
-			turn = 1-turn
-			state = new_state[:]
-			moved_from = [-1, -1]
-			moved_to = [-1, -1]
-	else:
-		#not local's turn
-		directions = connection.receive()
-		ls = []
-		temp = ''
-		for i in directions:
-			if i == ' ':
-				ls.append(int(temp))
-				temp = ''
-			else:
-				temp = temp + i
-		ls.append(int(temp))
-		moved_from = [ls[0], ls[1]]
-		moved_to = [ls[2], ls[3]]
-
-		#moving stuff
-		move.move_square(moved_from[0], moved_from[1], 0.00025)
-		magnet_on()
-		if abs(moved_from[0]-moved_to[0]) == abs(moved_from[1]-moved_to[1]):
-			#diagonal move
-			print('diagonal')
-			move.move_piece(moved_to[0], moved_to[1], .0004)
-		elif moved_from[0]-moved_to[0] == 0 or moved_from[1]-moved_to[1] == 0:
-			#straight move
-			print('straight')
-			move.move_piece(moved_to[0], moved_to[1], .0004)
-		else:
-			#weird janky move write some code later or something
-			print('weird')
-			yobstacles = []
-			xobstacles = []
-
-			x_dir = math.copysign(1, moved_to[1]-moved_from[1])
-			y_dir = math.copysign(1, moved_to[0]-moved_from[0])
-
-			print(f'moved from: {moved_from[0], moved_from[1]}')
-			print(f'moved to: {moved_to[0], moved_to[1]}')
-
-			if moved_from[0] > moved_to[0]:
-				for y in range(moved_to[0], moved_from[0]):
-					if state[y][moved_from[1]] == 1:
-						yobstacles.append([y, moved_from[1]])
-			else:
-				for y in range(moved_from[0]+1, moved_to[0]+1):
-					if state[y][moved_from[1]] == 1:
-						yobstacles.append([y, moved_from[1]])
-
-			if moved_from[1] > moved_to[1]:
-				for x in range(moved_to[1]+1, moved_from[1]):
-					if state[moved_to[0]][x] == 1:
-						xobstacles.append([moved_to[0], x])
-
-			else:
-				for x in range(moved_from[1]+1, moved_to[1]):
-					if state[moved_to[0]][x] == 1:
-						xobstacles.append([moved_to[0], x])
-
-			print('Y Obstacles:')
-			for i in yobstacles:
-				print(i)
-			print('X Obstacles:')
-			for i in xobstacles:
-				print(i)
-			if len(yobstacles) == 0 and len(xobstacles) == 0:
-				move.move_piece(moved_to[0], moved_from[1], .0004)
-				move.move_piece(moved_to[0], moved_to[1], .0004)
-			elif len(yobstacles) == 0:
-				move.move_piece(moved_to[0]-y_dir/2, moved_from[1], .0004)
-				move.move_piece(moved_to[0]-y_dir/2, moved_to[1], .0004)
-				move.move_piece(moved_to[0], moved_to[1], .0004)
-			elif len(xobstacles) == 0:
-				move.move_piece(moved_from[0], moved_from[1]+x_dir/2, .0004)
-				move.move_piece(moved_to[0], moved_from[1]+x_dir/2, .0004)
-				move.move_piece(moved_to[0], moved_to[1], .0004)
-			else:
-				move.move_piece(moved_from[0], moved_from[1]+x_dir/2, .0004)
-				move.move_piece(moved_to[0]-y_dir/2, moved_from[1]+x_dir/2, .0004)
-				move.move_piece(moved_to[0]-y_dir/2, moved_to[1], .0004)
-				move.move_piece(moved_to[0], moved_to[1], .0004)
-
-		magnet_off()
-		state = read_board()
-		for i in state:
-			print(i)
-		turn = 1-turn
-		moved_from = [-1, -1]
-		moved_to = [-1, -1]
-
+time.sleep(5)
+move.move_square(6, 4, .0003)
+magnet_on()
+move.move_piece(4, 4, .0003)
+magnet_off()
+time.sleep(3)
+move.move_square(7, 2, .0003)
+magnet_on()
+move.move_square(6.5, 2.5, .0003)
+move.move_square(5.5, 2.5, .0003)
+move.move_piece(5, 3, .0003)
+magnet_off()
+time.sleep(3)
+move.move_square(2, 8, .0003)
+magnet_on()
+move.move_piece(2, 9, .0003)
+move.move_piece(7, 9, .0003)
+magnet_off()
+move.move_square(7, 3, .0003)
+magnet_on()
+move.move_piece(2, 8, .0003)
+magnet_off()
+time.sleep(4)
+move.move_square(7, 4, .0003)
+magnet_on()
+move.move_piece(7, 2, .0003)
+magnet_off()
+move.move_square(7, 1, .0003)
+magnet_on()
+move.move_piece(6.5, 1, .0003)
+move.move_piece(6.5, 3, .0003)
+move.move_piece(7, 3, .0003)
+magnet_off()
